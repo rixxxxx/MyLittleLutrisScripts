@@ -8,3 +8,12 @@ Play "MechWarrior 3" CD edition on Linux!
 ### Credits:
 - Dosbox Pure Unleashed: https://github.com/schellingb/dosbox-pure-unleashed
 - Lutris script maintained by legluondunet: https://github.com/legluondunet/MyLittleLutrisScripts
+
+# MechWarrior 3 - CD
+### Description:
+Play "MechWarrior 3" CD edition on Linux!
+### Technical notes:
+- Known issues: This game does not support Alt-Tab, you will loose mouse interaction. Workaround: use Gamescope
+### Credits:
+- CDAudio proxy: https://sourceforge.net/projects/cdaudio-proxy
+- Lutris script maintained by legluondunet: https://github.com/legluondunet/MyLittleLutrisScripts

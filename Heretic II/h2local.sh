@@ -1,25 +1,18 @@
 #!/bin/bash
 
-lang=$1
-echo "Language choisi: " $lang
+lang="$1"
 
-if [ $lang = "keep" ]; then exit
+echo "Language choisi: ${lang}"
+
+if [ "$lang" = "english" ]; then exit
+elif [ -d "drive_c/Program Files (x86)/Heretic II" ]; then cd "./drive_c/Program Files (x86)/Heretic II/Base"
+elif [ -d "drive_c/Heretic2R" ]; then cd "drive_c/Heretic2R/base"
 fi
 
-if [ -f "HERETICIICDL/heretic2" ]; then 
-echo "installation CD Linux localisée"
-cd HERETICIICDL/base
-fi
+rm -f french-1.pak german-1.pak italian-1.pak spanish-1.pak Htic2-1.pak Gamemsg.txt Levelmsg.txt Menus.cfg
 
-if [ -f "drive_c/Program Files (x86)/Heretic II/heretic2.exe" ]; then
-echo "installation CD Windows localisée"
-cd "drive_c/Program Files (x86)/Heretic II/base"
-fi
-
-rm -f -r french-1.pak german-1.pak italian-1.pak spanish-1.pak htic2-1.pak gamemsg.txt levelmsg.txt menus.cfg
-
-wget --no-check-certificate "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Heretic%20II/lang/"$lang"-1.pak.tar.xz"
-tar xfv $lang-1.pak.tar.xz
-mv $lang-1.pak htic2-1.pak
-rm -f -r $lang-1.pak.tar.xz
-
+wget --no-check-certificate "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Heretic%20II/lang/${lang}-1.pak.7z.001"
+wget --no-check-certificate "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Heretic%20II/lang/${lang}-1.pak.7z.002"
+7z x "${lang}-1.pak.7z.001"
+mv "${lang}-1.pak" "htic2-1.pak"
+rm -f "${lang}-1.pak.7z.001" "${lang}-1.pak.7z.002"

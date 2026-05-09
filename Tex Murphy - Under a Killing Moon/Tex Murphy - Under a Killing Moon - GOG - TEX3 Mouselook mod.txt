@@ -1,0 +1,52 @@
+files:
+- gogsetup: N/A:Please select the Windows setup exe file downloaded from your GOG
+    account.
+- game_mod: https://github.com/legluondunet/MyLittleLutrisScripts/raw/refs/heads/master/Tex%20Murphy%20-%20Under%20a%20Killing%20Moon/uakm_mouselook_mod.7z
+game:
+  main_file: $GAMEDIR/dosboxTex3_single.conf
+  prefix: $GAMEDIR
+installer:
+- extract:
+    dst: $GAMEDIR
+    file: gogsetup
+    format: gog
+- merge:
+    dst: $GAMEDIR
+    src: $GAMEDIR/__support/app
+- write_file:
+    content: '[autoexec]
+
+      mount C "."
+
+      imgmount D "UAKM.GOG" -t iso
+
+      c:
+
+      TEX3_MOD.EXE
+
+      exit'
+    file: $GAMEDIR/dosboxTex3_single.conf
+- write-config:
+    data:
+      DIGI_CONFIG:
+        Int: 7
+      MIDI_CONFIG:
+        BoardNum: 1
+        IoAddr: '0x388'
+    file: $GAMEDIR/CONFIG.INI
+    merge: true
+- extract:
+    dst: $CACHE
+    file: game_mod
+    format: 7z
+- input_menu:
+    description: 'What is you game''s language?:'
+    id: LANG
+    options:
+    - en: English
+    - fr: French
+    - ge: German
+    preselect: en
+- merge:
+    dst: $GAMEDIR
+    src: $CACHE/$INPUT_LANG

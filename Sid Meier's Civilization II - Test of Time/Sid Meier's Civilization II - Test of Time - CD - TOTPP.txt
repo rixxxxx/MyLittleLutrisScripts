@@ -1,0 +1,45 @@
+files:
+- game_cd:
+    filename: TEST OF TIME V1.iso
+    url: https://archive.org/download/testoftimev1/TEST%20OF%20TIME%20V1.iso
+- game_update: https://github.com/legluondunet/MyLittleLutrisScripts/raw/refs/heads/master/Sid%20Meier's%20Civilization%20II%20-%20Test%20of%20Time/civtot11.zip
+- game_patch: https://github.com/legluondunet/MyLittleLutrisScripts/raw/refs/heads/master/Sid%20Meier's%20Civilization%20II%20-%20Test%20of%20Time/TOTPPv018.4.zip
+game:
+  exe: drive_c/Program Files/Microprose/Test of Time/TOTLauncher.exe
+  prefix: $GAMEDIR
+installer:
+- task:
+    arch: win64
+    description: Creating wineprefix...
+    name: create_prefix
+    prefix: $GAMEDIR
+- extract:
+    description: Extracting game ISO...
+    dst: $CACHE/CD
+    file: game_cd
+    format: iso
+- task:
+    description: Installing game, let all options to default, do not launch game...
+    executable: $CACHE/CD/SETUP.EXE
+    name: wineexec
+    prefix: $GAMEDIR
+- merge:
+    description: Copying game data from CD to folder install...
+    dst: $GAMEDIR/drive_c/Program Files/Microprose/Test of Time/Video
+    src: $CACHE/CD/Civ2/Video
+- extract:
+    description: Extracting game update...
+    dst: $CACHE
+    file: game_update
+    format: zip
+- task:
+    description: Installing game update, let all options to default, do not launch
+      game...
+    executable: $CACHE/civtot11.exe
+    name: wineexec
+    prefix: $GAMEDIR
+- extract:
+    description: Extracting TOTPP update...
+    dst: $GAMEDIR/drive_c/Program Files/Microprose/Test of Time
+    file: game_patch
+    format: zip

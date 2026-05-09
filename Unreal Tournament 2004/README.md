@@ -1,28 +1,15 @@
-# Unreal Tournament - GOG - DxWrapper
+# Unreal Tournament - DVD Windows + OldUnreal patch
 ### Description:
-Play "Unreal Tournament 2004" provided by GOG on Linux!
+Play "Unreal Tournament 2004" DVD Windows edition on Linux!
 ### Technical notes:
-- This script installer will automagically set the game to your desktop resolution with widescreen mode
+- Install Windows AND Linux version
+- Included: Megapack v3369 + OldUnreal patch 3374
+- Game will be set to your desktop resolution in widescreen mode with adapted FOV
+- Game's languages available: English (default), Spanish, French and Italian
+- Play UT2004 online with 333networks masterserver
 - Depend your keyboard layout, press "~" (qwerty) or "ù" (azerty) or ... key to show console
-- Multilingual: you will be able to choose your preferred language for menus, subtitles and voices during installation between English (default), French, German, Italian and Spanish
-- Play UT2004 online with 333networks masterserver
-- type "preferences" in console to access advanced settings
+- Type "preferences" in console to access advanced settings
 ### Credits:
-- DxWrapper: https://github.com/elishacloud/dxwrapper
-- Lutris script maintained by legluondunet: https://github.com/legluondunet/MyLittleLutrisScripts
-
-# Unreal Tournament - GOG - Linux
-### Description:
-Play "Unreal Tournament 2004" provided by GOG on Linux!
-### Technical notes:
-- Native x64 Linux version
-- This script installer will automagically set the game to your desktop resolution with widescreen mode
-- press "~" key to show console
-- Multilingual: you will be able to choose your preferred language for menus, subtitles and voices during installation between English (default), French, German, Italian and Spanish
-- Play UT2004 online with 333networks masterserver
-- You can not alt+tab. Workaround: use Gamescope
-- Game could crash if you click on a web link
-- Use Mangohud or libstrangle to limit fps. For example: 
-MANGOHUD_CONFIG="fps_limit=60" mangohud --dlsym ./ut2004-bin-linux-amd64
-### Credits:
+- OldUnreal patch: https://github.com/OldUnreal/UT2004Patches
+- Megapack v3369: https://community.pcgamingwiki.com/files/file/166-unreal-tournament-2004-mega-pack-windows
 - Lutris script maintained by legluondunet: https://github.com/legluondunet/MyLittleLutrisScripts

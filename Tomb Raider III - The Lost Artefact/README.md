@@ -7,3 +7,12 @@ Play "Tomb Raider III - The Lost Artefact" CD edition on Linux! using TOMB3 open
 - TOMB3: https://github.com/Trxyebeep/tomb3
 - dgVoodoo2: http://www.dege.freeweb.hu
 - Lutris script maintained by legluondunet: https://github.com/legluondunet/MyLittleLutrisScripts
+
+# Tomb Raider III - The Lost Artefact - CD + TRX
+### Description:
+Play "Tomb Raider III - The Lost Artefact" CD edition on Linux!
+### Technical notes:
+- Using TRX engine
+### Credits:
+- TRX: https://github.com/LostArtefacts/TRX
+- Lutris script maintained by legluondunet: https://github.com/legluondunet/MyLittleLutrisScripts

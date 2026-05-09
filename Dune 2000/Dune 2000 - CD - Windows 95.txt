@@ -1,0 +1,24 @@
+files:
+- os_img: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/Windows_95/WIN95_OSR25_DBP_2Go.7z
+- dbpu_file: https://github.com/legluondunet/mlls-tools/raw/refs/heads/master/DOSBox/dosbox-pure-unleashed.tar.xz
+- game_cd: https://archive.org/download/Dune2000USA/Dune%202000%20%28USA%29.zip
+- dbpu_save:
+    filename: Dune 2000 (USA).pure.zip
+    url: https://github.com/legluondunet/MyLittleLutrisScripts/raw/refs/heads/master/Windows%2095/DOSBox-pure.pure.zip
+game:
+  args: '"$GAMEDIR/CD/Dune 2000 (USA).cue"'
+  exe: $GAMEDIR/DOSBoxPure_x86_64
+  working_dir: $GAMEDIR
+installer:
+- extract:
+    dst: $GAMEDIR
+    file: dbpu_file
+- extract:
+    dst: $GAMEDIR/system
+    file: os_img
+- extract:
+    dst: $GAMEDIR/CD
+    src: game_cd
+- merge:
+    dst: $GAMEDIR/saves
+    src: dbpu_save

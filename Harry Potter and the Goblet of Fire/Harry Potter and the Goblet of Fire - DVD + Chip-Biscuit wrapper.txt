@@ -1,0 +1,49 @@
+files:
+- game_dvd: N/A:Please select DVD image in ISO format
+- game_patch: https://github.com/legluondunet/MyLittleLutrisScripts/raw/refs/heads/master/Harry%20Potter%20and%20the%20Goblet%20of%20Fire/hp_gof_patch.7z
+- wrapper: https://github.com/legluondunet/MyLittleLutrisScripts/raw/refs/heads/master/Harry%20Potter%20and%20the%20Goblet%20of%20Fire/hp4fix.zip
+game:
+  exe: drive_c/Program Files (x86)/Electronic Arts/Harry Potter and the Goblet of
+    Fire/gof_f.exe
+  launch_configs:
+  - exe: $GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/Harry Potter and the
+      Goblet of Fire/d3d9.ini
+    name: Advanced graphic options
+  prefix: $GAMEDIR
+installer:
+- task:
+    description: Preparing wineprefix...
+    name: create_prefix
+    prefix: $GAMEDIR
+- extract:
+    dst: $CACHE/CD
+    file: game_dvd
+    format: iso
+- task:
+    description: Installing game, let all options to default and do not start the
+      game at the end of install. When asking for a serial, enter WN3K-JU4G-B4GL-VB9A-R63T
+    executable: $CACHE/CD/AutoRun.exe
+    name: wineexec
+    prefix: $GAMEDIR
+    working_dir: $CACHE/CD
+- execute:
+    command: cd "$GAMEDIR/drive_c/Program Files (x86)/Electronic Arts"; gamepath=$(find
+      . -maxdepth 1 -type d -iname "*Harry*"); gamepath=$(basename "$gamepath"); ln
+      -s "$gamepath" "Harry Potter and the Goblet of Fire";
+- merge:
+    dst: $GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/Harry Potter and the
+      Goblet of Fire/backup
+    src: $GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/Harry Potter and the
+      Goblet of Fire/gof_f.exe
+- extract:
+    dst: $GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/Harry Potter and the
+      Goblet of Fire
+    file: game_patch
+    format: 7z
+- extract:
+    dst: $GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/Harry Potter and the
+      Goblet of Fire
+    file: wrapper
+wine:
+  overrides:
+    d3d9: n,b

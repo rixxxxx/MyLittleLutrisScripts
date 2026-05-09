@@ -1,0 +1,137 @@
+files:
+- game_cd: https://archive.org/compress/ut-goty/formats=ISO%20IMAGE&file=/ut-goty.zip
+- patch1: https://github.com/OldUnreal/UnrealTournamentPatches/releases/download/v469e/OldUnreal-UTPatch469e-Windows-x86.zip
+- patch2: https://github.com/OldUnreal/UnrealTournamentPatches/releases/download/v469e/OldUnreal-UTPatch469e-Linux-amd64.tar.bz2
+game:
+  exe: drive_c/UnrealTournament/System/UnrealTournament.exe
+  launch_configs:
+  - exe: $GAMEDIR/drive_c/UnrealTournament/System64/ut-bin-amd64
+    name: Unreal Tournament (1999) Linux native version
+  - args: -firstrun
+    exe: $GAMEDIR/drive_c/UnrealTournament/System/UnrealTournament.exe
+    name: Unreal Tournament (1999) Windows first run
+  - exe: $GAMEDIR/drive_c/UnrealTournament/System64/UnrealTournament.ini
+    name: Unreal Tournament (1999) Linux config file
+  prefix: $GAMEDIR
+installer:
+- task:
+    arch: win64
+    name: create_prefix
+    prefix: $GAMEDIR
+- extract:
+    description: Extracting game CD archive...
+    dst: $CACHE
+    file: game_cd
+    format: zip
+- extract:
+    description: Extracting game CD data...
+    dst: $CACHE/CD
+    file: $CACHE/UT_GOTY_CD1.iso
+    format: iso
+- task:
+    description: Running setup of the game. Just proceed and keep all settings at
+      their defaults
+    executable: $CACHE/CD/Setup.exe
+    name: wineexec
+    prefix: $GAMEDIR
+- extract:
+    dst: $GAMEDIR/drive_c/UnrealTournament
+    file: patch1
+- extract:
+    dst: $GAMEDIR/drive_c/UnrealTournament
+    file: patch2
+- chmodx: $GAMEDIR/drive_c/UnrealTournament/System64/ut-bin-amd64
+- input_menu:
+    description: 'Choose your preferred game''s language for menus and subtitles:'
+    id: LANG
+    options:
+    - int: English
+    - frt: French
+    - det: German
+    - itt: Italian
+    - est: Spanish
+    preselect: int
+- input_menu:
+    description: 'What is your screen ratio?:'
+    id: RATIO
+    options:
+    - 106: 16:9 like 1920x1080
+    - 100: 16:10 like 1920x1200
+    - 90: 4:3 for old screen format
+    preselect: 106
+- write_config:
+    data:
+      Engine.Engine:
+        AudioDevice: ALAudio.ALAudioSubsystem
+        GameRenderDevice: ICBINDx11Drv.ICBINDx11RenderDevice
+        Language: $INPUT_LANG
+      FirstRun:
+        FirstRun: 469
+      UMenu.UMenuRootWindow:
+        AutoGUIScale: false
+        ConfiguredGUIScale: 1.5
+      UWindow.WindowConsole:
+        ConsoleKey: 112
+      WinDrv.WindowsClient:
+        BorderlessWindow: true
+        FrameRateLimit: 60
+        FullscreenColorBits: 32
+        FullscreenViewportX: $RESOLUTION_WIDTH
+        FullscreenViewportY: $RESOLUTION_HEIGHT
+        StartupFullscreen: false
+        UseRawHIDInput: true
+        WindowedColorBits: 32
+        WindowedViewportX: $RESOLUTION_WIDTH
+        WindowedViewportY: $RESOLUTION_HEIGHT
+    file: $GAMEDIR/drive_c/UnrealTournament/System/Default.ini
+    merge: true
+- write_config:
+    data:
+      Engine.PlayerPawn:
+        DefaultFOV: $INPUT_RATIO
+        DesiredFOV: $INPUT_RATIO
+    file: $GAMEDIR/drive_c/UnrealTournament/System/DefUser.ini
+    merge: true
+- write_config:
+    data:
+      Engine.Engine:
+        AudioDevice: ALAudio.ALAudioSubsystem
+        GameRenderDevice: OpenGLDrv.OpenGLRenderDevice
+        Language: $INPUT_LANG
+        ViewportManager: SDLDrv.SDLClient
+      FirstRun:
+        FirstRun: 469
+      SDLDrv.SDLClient:
+        BorderlessWindow: true
+        FrameRateLimit: 60
+        FullscreenColorBits: 32
+        FullscreenViewportX: $RESOLUTION_WIDTH
+        FullscreenViewportY: $RESOLUTION_HEIGHT
+        StartupFullscreen: false
+        UseRawHIDInput: true
+        WindowedColorBits: 32
+        WindowedViewportX: $RESOLUTION_WIDTH
+        WindowedViewportY: $RESOLUTION_HEIGHT
+      UMenu.UMenuRootWindow:
+        AutoGUIScale: false
+        ConfiguredGUIScale: 1.5
+      UWindow.WindowConsole:
+        ConsoleKey: 112
+    file: $GAMEDIR/drive_c/UnrealTournament/System64/Default.ini
+    merge: true
+- write_config:
+    data:
+      Engine.PlayerPawn:
+        DefaultFOV: $INPUT_RATIO
+        DesiredFOV: $INPUT_RATIO
+    file: $GAMEDIR/drive_c/UnrealTournament/System64/DefUser.ini
+    merge: true
+- move:
+    dst: $CACHE
+    src: $GAMEDIR/drive_c/UnrealTournament/System/User.ini
+- move:
+    dst: $CACHE
+    src: $GAMEDIR/drive_c/UnrealTournament/System/UnrealTournament.ini
+- execute:
+    command: cd "$GAMEDIR/drive_c/UnrealTournament/System64"; cp Default.ini UnrealTournament.ini;
+      cp DefUser.ini User.ini;
